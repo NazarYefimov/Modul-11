@@ -1,15 +1,15 @@
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 class SortNumbers {
     public static void main(String[] args) {
         String[] arr = {"1, 2, 0", "4, 5"};
-        String merged = String.join(",", arr); 
-        String[] numbers = merged.split(",\\s*");
-        int[] intArray = new int[numbers.length];
-        for (int i = 0; i < numbers.length; i++) {
-            intArray[i] = Integer.parseInt(numbers[i].trim()); 
-        }
-        Arrays.sort(intArray);
-        System.out.println(Arrays.toString(intArray));
+        String result = Arrays.stream(arr)
+                .flatMap(s -> Arrays.stream(s.split(",\\s*")))
+                .map(String::trim)
+                .distinct()
+                .sorted()
+                .collect(Collectors.joining(", "));
+        System.out.println(result);
     }
 }
