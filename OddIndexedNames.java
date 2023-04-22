@@ -1,9 +1,12 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-public class OddIndexedNames {
+class OddIndexedNames {
+
     public static void main(String[] args) {
-        
+     
         List<String> names = new ArrayList<>();
         names.add("Alice");
         names.add("Bob");
@@ -17,14 +20,9 @@ public class OddIndexedNames {
     }
 
     public static String formatNames(List<String> names) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 1; i < names.size(); i += 2) {
-            sb.append(i).append(". ").append(names.get(i)).append(", ");
-        }
-     
-        if (sb.length() > 0) {
-            sb.delete(sb.length() - 2, sb.length());
-        }
-        return sb.toString();
+        return IntStream.range(1, names.size())
+                .filter(i -> i % 2 != 0)
+                .mapToObj(i -> i + ". " + names.get(i))
+                .collect(Collectors.joining(", "));
     }
 }
